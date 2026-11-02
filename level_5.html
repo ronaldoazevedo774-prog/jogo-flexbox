@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox - Froggy</title>
+    <style>
+        /*
+        Verde: #43A047
+        Azul-turquesa: #239DAD
+        Azul-escuro: #2C3E50
+        Branco: #FFFFFF
+        Verde-claro: #E8F5E9
+        */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #43A047;
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .jogo {
+            position: relative;
+            width: 380px;
+            height: 380px;
+            background-color: rgb(42, 90, 112);
+            border-radius: 0 0 10px 10px;
+        }
+
+        .vitoria1 {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            right: 71.5%;
+            top: 72%;
+            transform: rotate(160deg);
+            padding: 8px;
+            margin: 10px;
+        }
+
+        .vitoria2 {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            right: 54%;
+            top: 72%;
+            transform: rotate(35deg);
+            padding: 8px;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        .vitoria3 {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            right: 34.5%;
+            top: 72%;
+            transform: rotate(95deg);
+            padding: 10px;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        
+        .area {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+
+            /*align-items: flex-end;*/
+        }
+
+        .area {
+            z-index: 1;
+        }
+        
+        .personagem, .personagem2, .personagem3 {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            margin: 30px;
+            margin-block-end: 30px;
+            flex-shrink: 0;
+            min-width: 0;
+        }
+
+        .personagem2 {
+            margin-left: 2px;
+        }
+
+        .personagem3 {
+            margin-left: -1px;
+        }
+
+
+        .info {
+            margin: 25px;
+            color: #E8F5E9;
+        }
+
+        ul {
+            margin: 15px 15px 15px 50px;
+        }
+        
+        li {
+            margin: 3px;
+        }
+
+        h1 {
+            text-align: center;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        p {
+            text-align: left;
+            font-size: 15px;
+        }
+
+        .caixa {
+            background-color: #e0e0e0;
+            color: #777;
+            margin-top: 25px;
+            height: 350px;
+            border-radius: 5px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+
+        .codigo {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+            align-items: stretch;
+            font-family: monospace;
+            font-size: 16px;
+            line-height: 1.8;
+            position: relative;
+        }
+
+        .numeros {
+            background-color: #999;
+            color: #eee;
+            width: 40px;
+            flex-shrink: 0;
+            align-self: stretch;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            padding: 15px 8px 0;
+            font-family: monospace;
+            user-select: none;
+            height: 350px;
+        }
+
+        .numeros span {
+            height: 28.8px;
+            line-height: 28.8px;
+            font-family: monospace;
+        }
+
+        .editor {
+            flex: 1;
+            min-width: 0;
+            padding: 15px 12px;
+            font-family: monospace;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .editor > div {
+            height: 28.8px;
+            font-family: monospace;
+        }
+
+        .linha {
+            padding-left: 30px;
+        }
+
+        .entrada {
+            display: block;
+            width: 100%;
+            height: 28.8px;
+            border: none;
+            outline: none;
+            background-color: white;
+            color: #555;
+            font-family: monospace;
+            font-size: 16px;
+            padding: 0 4px;
+        }
+
+        .butao {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0 15px 15px;
+            margin-top: 0;
+            background-color: #e0e0e0;
+        }
+
+        .next {
+            background-color: #df7b70;
+            color: white;
+            width: 70px;
+            height: 38px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .next:hover {
+            background-color: rgb(200, 40, 40);
+        }
+
+        .seletor-niveis {
+            display: flex;
+            align-items: center;
+            width: 215px;
+            height: 32px;
+            background-color: #c4dbc579;
+            border-radius: 4px;
+            overflow: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 10px auto;
+            margin-block-end: 20px;
+        }
+
+        .seletor-niveis button {
+            height: 100%;
+            border: none;
+            color: white;
+            background-color: transparent;
+            cursor: pointer;
+        }
+
+        #anterior,
+        #proximo {
+            width: 27px;
+            flex-shrink: 0;
+            font-size: 12px;
+            color: #c8e6c9;
+        }
+
+        #anterior:hover,
+        #proximo:hover {
+            background-color: #388e3c;
+        }
+
+        #nivel-atual {
+            flex: 1;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        #nivel-atual span {
+            font-size: 10px;
+        }
+
+        mark {
+            background-color: #c8e6c952;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            color: #E8F5E9;
+            font-weight: bold;
+            padding-right: 3px;
+            padding-left: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h1>FLEXBOX FROGGY</h1>
+        <div class="seletor-niveis">
+            <button id="anterior" aria-label="Nível anterior">◀</button>
+
+            <button id="nivel-atual">
+                Level 1 of 24 <span>▾</span>
+            </button>
+
+            <button id="proximo" aria-label="Próximo nível">▶</button>
+        </div>
+
+        <p>Now use <mark>align-items</mark> to help the frogs get to the bottom of the pond. This CSS property aligns items vertically and accepts the following values:</p>
+
+        <ul>
+            <li><mark>flex-start</mark>: Items align to the top of the container.</li>
+            <li><mark>flex-end</mark>: Items align to the bottom of the container.</li>
+            <li><mark>center</mark>: Items align at the vertical center of the container.</li>
+            <li><mark>space-between</mark>: Items display at the baseline of the container.</li>
+            <li><mark>space-around</mark>: Items are stretched to fit the container.</li>
+        </ul>
+
+        <div class="caixa">
+            <div class="codigo">
+                <div class="numeros">
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                    <span>6</span>
+                    <span>7</span>
+                    <span>8</span>
+                    <span>9</span>
+                    <span>10</span>
+                </div>
+
+                <div class="editor">
+                    <div>#pond {</div>
+
+                    <div class="linha">
+                        display: flex;
+                    </div>
+
+                    <div class="linha">
+                        <input type="text" class="entrada">
+                    </div>
+
+                    <div>}</div>
+                </div>
+            </div>
+
+            <div class="butao">
+                <input type="button" value="Next" class="next" onclick="window.location.href='level_6.html'">
+            </div>
+        </div>
+    </div>
+
+    <div class="jogo">
+        <img class="vitoria1"
+            src="imagens/Flexbox_Froggy_–_Lilypad-green-color-assist.svg.webp"
+            alt="Vitória-régia verde">
+
+        <img class="vitoria2"
+            src="imagens/Flexbox_Froggy_–_Lilypad-yellow-color-assist.svg.webp"
+            alt="Vitória-régia amarela">
+
+        <img class="vitoria3" src="imagens/Flexbox_Froggy_–_Lilypad-red-color-assist.svg.webp" alt="Vitória-régia vermelha">
+
+        <div class="area">
+            <img class="personagem"
+                src="imagens/Flexbox_Froggy_–_Frog-green-color-assist.svg.webp"
+                alt="Personagem verde">
+            <img class="personagem2"
+                src="imagens/Flexbox_Froggy_–_Frog-yellow-color-assist.svg"
+                alt="Personagem amarelo">
+            <img class="personagem3" src="imagens/Flexbox_Froggy_–_Frog-red-color-assist.svg" alt="Personagem vermelho">
+        </div>
+    </div>
+
+    
+    <script>
+        const totalNiveis = 24;
+
+        const anterior = document.getElementById("anterior");
+        const proximo = document.getElementById("proximo");
+        const botaoNivel = document.getElementById("nivel-atual");
+
+        const entradas = document.querySelectorAll(".entrada");
+        const area = document.querySelector(".area");
+
+        entradas.forEach((entrada) => {
+            entrada.addEventListener("input", () => {
+                entradas.forEach((campo) => {
+                    const regra = campo.value.trim();
+
+                    if (regra && regra.includes(":")) {
+                        const [propriedade, ...partes] = regra.split(":");
+                        const valor = partes.join(":").replace(/;$/, "").trim();
+
+                        area.style.setProperty(
+                            propriedade.trim(),
+                            valor
+                        );
+                    }
+                });
+            });
+        });
+
+        const arquivoAtual = location.pathname.split("/").pop();
+        let nivelAtual = Number(
+            arquivoAtual.match(/level_(\d+)\.html/)?.[1]
+        ) || 1;
+
+        function atualizarSeletor() {
+            botaoNivel.innerHTML =
+                `Level ${nivelAtual} of ${totalNiveis} <span>▾</span>`;
+
+            anterior.disabled = nivelAtual === 1;
+            proximo.disabled = nivelAtual === totalNiveis;
+
+            anterior.style.opacity = anterior.disabled ? "0.4" : "1";
+            proximo.style.opacity = proximo.disabled ? "0.4" : "1";
+        }
+
+        anterior.addEventListener("click", () => {
+            if (nivelAtual > 1) {
+                location.href = `level_${nivelAtual - 1}.html`;
+            }
+        });
+
+        proximo.addEventListener("click", () => {
+            if (nivelAtual < totalNiveis) {
+                location.href = `level_${nivelAtual + 1}.html`;
+            }
+        });
+
+        atualizarSeletor();
+    </script>
+</body>
+</html>
