@@ -143,24 +143,13 @@
             flex-wrap: nowrap;
             /*flex-wrap: wrap;*/
             align-items: flex-start;
-            z-index: 1;
         }
 
         .area {
             z-index: 1;
         }
-
-        .personagem1, .personagem2, .personagem3, .personagem4,
-        .personagem5, .personagem6, .personagem7 {
-            width: 45px;
-            height: 45px;
-            object-fit: contain;
-            margin: 4.6px;
-            margin-top: 30px;
-            flex-shrink: 0;
-        }
         
-        /*.personagem1, .personagem2, .personagem3, .personagem4,
+        .personagem1, .personagem2, .personagem3, .personagem4,
         .personagem5, .personagem6, .personagem7 {
             width: 45px;
             height: 45px;
@@ -168,7 +157,7 @@
             margin: 15px;
             margin-top: 30px;
             flex-shrink: 0;
-        }*/
+        }
 
         .info {
             margin: 25px;
@@ -394,7 +383,7 @@
                     </div>
                     
                     <div class="linha">
-                        <input type="text" class="entrada">
+                        <input type="text" class="entrada" data-target=".area">
                     </div>
                     <div>}</div>
                 </div>
@@ -464,63 +453,6 @@
     </div>
 
     
-    <script>
-        const totalNiveis = 24;
-
-        const anterior = document.getElementById("anterior");
-        const proximo = document.getElementById("proximo");
-        const botaoNivel = document.getElementById("nivel-atual");
-
-        const entradas = document.querySelectorAll(".entrada");
-        const area = document.querySelector(".area");
-
-        entradas.forEach((entrada) => {
-            entrada.addEventListener("input", () => {
-                entradas.forEach((campo) => {
-                    const regra = campo.value.trim();
-
-                    if (regra && regra.includes(":")) {
-                        const [propriedade, ...partes] = regra.split(":");
-                        const valor = partes.join(":").replace(/;$/, "").trim();
-
-                        area.style.setProperty(
-                            propriedade.trim(),
-                            valor
-                        );
-                    }
-                });
-            });
-        });
-
-        const arquivoAtual = location.pathname.split("/").pop();
-        let nivelAtual = Number(
-            arquivoAtual.match(/level_(\d+)\.html/)?.[1]
-        ) || 1;
-
-        function atualizarSeletor() {
-            botaoNivel.innerHTML =
-                `Level ${nivelAtual} of ${totalNiveis} <span>▾</span>`;
-
-            anterior.disabled = nivelAtual === 1;
-            proximo.disabled = nivelAtual === totalNiveis;
-
-            anterior.style.opacity = anterior.disabled ? "0.4" : "1";
-            proximo.style.opacity = proximo.disabled ? "0.4" : "1";
-        }
-
-        anterior.addEventListener("click", () => {
-            if (nivelAtual > 1) {
-                location.href = `level_${nivelAtual - 1}.html`;
-            }
-        });
-
-        proximo.addEventListener("click", () => {
-            if (nivelAtual < totalNiveis) {
-                location.href = `level_${nivelAtual + 1}.html`;
-            }
-        });
-
-        atualizarSeletor();
-    </script>
+    <script src="javascript/script.js"></script>
 </body>
 </html>

@@ -355,65 +355,7 @@
             <img class="personagem3" src="imagens/Flexbox_Froggy_–_Frog-red-color-assist.svg" alt="Personagem vermelho">
         </div>
     </div>
-
     
-    <script>
-        const totalNiveis = 24;
-
-        const anterior = document.getElementById("anterior");
-        const proximo = document.getElementById("proximo");
-        const botaoNivel = document.getElementById("nivel-atual");
-
-        const entradas = document.querySelectorAll(".entrada");
-        const area = document.querySelector(".area");
-
-        entradas.forEach((entrada) => {
-            entrada.addEventListener("input", () => {
-                entradas.forEach((campo) => {
-                    const regra = campo.value.trim();
-
-                    if (regra && regra.includes(":")) {
-                        const [propriedade, ...partes] = regra.split(":");
-                        const valor = partes.join(":").replace(/;$/, "").trim();
-
-                        area.style.setProperty(
-                            propriedade.trim(),
-                            valor
-                        );
-                    }
-                });
-            });
-        });
-
-        const arquivoAtual = location.pathname.split("/").pop();
-        let nivelAtual = Number(
-            arquivoAtual.match(/level_(\d+)\.html/)?.[1]
-        ) || 1;
-
-        function atualizarSeletor() {
-            botaoNivel.innerHTML =
-                `Level ${nivelAtual} of ${totalNiveis} <span>▾</span>`;
-
-            anterior.disabled = nivelAtual === 1;
-            proximo.disabled = nivelAtual === totalNiveis;
-
-            anterior.style.opacity = anterior.disabled ? "0.4" : "1";
-            proximo.style.opacity = proximo.disabled ? "0.4" : "1";
-        }
-
-        anterior.addEventListener("click", () => {
-            if (nivelAtual > 1) {
-                location.href = `level_${nivelAtual - 1}.html`;
-            }
-        });
-
-        proximo.addEventListener("click", () => {
-            if (nivelAtual < totalNiveis) {
-                location.href = `level_${nivelAtual + 1}.html`;
-            }
-        });
-
-        atualizarSeletor();
-    </script>
+    <script src="javascript/script.js"></script>
 </body>
 </html>
