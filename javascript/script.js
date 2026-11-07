@@ -14,10 +14,7 @@ entradas.forEach(entrada => {
 
     entrada.addEventListener("input", () => {
 
-        const seletor = entrada.dataset.target;
-
-        if (!seletor) return;
-
+        const seletor = entrada.dataset.target || ".area";
         const elementosAlvo = document.querySelectorAll(seletor);
 
         if (!elementosAlvo.length) return;
