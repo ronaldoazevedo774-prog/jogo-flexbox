@@ -1,4 +1,3 @@
-
 const totalNiveis = 24;
 
 const anterior = document.getElementById("anterior");
@@ -64,9 +63,7 @@ entradas.forEach(entrada => {
 
         // Aplicar a propriedade aos elementos selecionados
         elementosAlvo.forEach(elemento => {
-
             elemento.style.setProperty(propriedade, valor);
-
         });
 
         // Guardar a última propriedade aplicada
@@ -81,8 +78,20 @@ entradas.forEach(entrada => {
 const arquivoAtual = location.pathname.split("/").pop();
 
 let nivelAtual = Number(
-    arquivoAtual.match(/level_(\d+)\.html/)?.[1]
+    arquivoAtual.match(/^level_(\d+)\.html$/)?.[1]
 ) || 1;
+
+
+// Determinar o arquivo correspondente ao nível
+function obterArquivoNivel(nivel) {
+
+    if (nivel === 1) {
+        return "index.html";
+    }
+
+    return `level_${nivel}.html`;
+
+}
 
 
 // Atualizar seletor de níveis
@@ -105,7 +114,7 @@ anterior.addEventListener("click", () => {
 
     if (nivelAtual > 1) {
 
-        location.href = `level_${nivelAtual - 1}.html`;
+        location.href = obterArquivoNivel(nivelAtual - 1);
 
     }
 
@@ -117,7 +126,7 @@ proximo.addEventListener("click", () => {
 
     if (nivelAtual < totalNiveis) {
 
-        location.href = `level_${nivelAtual + 1}.html`;
+        location.href = obterArquivoNivel(nivelAtual + 1);
 
     }
 
