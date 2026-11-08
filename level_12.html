@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flexbox - Froggy</title>
+    <title>Flexbox Froggy - A game for learning CSS flexbox</title>
     <link rel="shortcut icon" href="imagens/favicon.ico" type="image/x-icon">
     <style>
         /*
@@ -283,6 +283,27 @@
             padding-right: 3px;
             padding-left: 3px;
         }
+
+        .rodape {
+            width: 100%;
+            padding: 15px;
+            background-color: #2E7D32;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            box-sizing: border-box;
+            order: -1;
+            margin-top: 10px;
+        }
+
+        .rodape strong {
+            color: #C8E6C9;
+        }
+
+        .textorodape {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -358,6 +379,10 @@
             <img class="personagem3" src="imagens/Flexbox_Froggy_–_Frog-red-color-assist.svg" alt="Personagem vermelho">
         </div>
     </div>
+
+    <footer class="rodape">
+        <p class="textorodape">Desenvolvido por <strong>Ronald Cayron</strong> © 2026</p>
+    </footer>
 
     <script src="javascript/script.js"></script>
 </body>
